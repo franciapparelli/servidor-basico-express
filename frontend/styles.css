@@ -1,0 +1,11 @@
+th, td {
+  padding: 4px; /* Reduce padding */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+td:nth-child(2) { /* Select second column (values) */
+  padding-left: 20px; /* Add padding to the left */
+}
+tr:hover {
+  background-color: #f2f2f2;
+}
