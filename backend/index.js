@@ -64,8 +64,10 @@ app.post('/autos', async function(req, res) {
     modelo = await MySQL.realizarQuery(`SELECT * FROM Autos WHERE modelo = "${body.modelo}"`);
     if (modelo === undefined || modelo.length === 0) {
         const respuesta = MySQL.realizarQuery(`INSERT INTO Autos (marca, modelo, cant_pasajeros, kit_seguridad) VALUES ("${body.marca}", "${body.modelo}", "${body.cant_pasajeros}", "${body.kit_seguridad}");`);
+        console.log(respuesta)
         res.send(respuesta);
     } else {
+        console.log("El modelo del auto se repite")
         res.send("El modelo del auto se repite");
     }
 });

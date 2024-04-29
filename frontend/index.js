@@ -1,3 +1,5 @@
+console.log("hello world!")
+
 async function getAllFromAutos() {
     const response = await fetch("http://localhost:3000/autos", {
         method: "GET",
@@ -37,6 +39,7 @@ async function getAllFromAutos() {
                 <td>${result[x].kit_seguridad}</td>
             </tr>
         </table>
+        <button onclick="deleteCar(${result[x].id_auto})">Eliminar Auto</button>
         <br>`;
     }
 
@@ -44,20 +47,20 @@ async function getAllFromAutos() {
         drawTable(i)
     }
 
-    // document.getElementById("cell00").innerHTML = result[0].id
 }
 
-async function addNewAuto(){
-    auto = {
+async function addNewCar(){
+    const auto = {
         marca: document.getElementById("marca").value,
         modelo: document.getElementById("modelo").value,
         cant_pasajeros: document.getElementById("cantPasajeros").value,
         kit_seguridad: document.getElementById("kitSeguridad").value
     }
-    
+    console.log(auto)
     const response = await fetch("http://localhost:3000/autos", {
         method: "POST",
         headers: {
+            Accept: 'application/json',
             "Content-Type": "application/json"
         },
         body: JSON.stringify(auto)
@@ -66,4 +69,18 @@ async function addNewAuto(){
     let res = await response.json()
     console.log(res)
     
+}
+
+async function deleteCar(id){
+    const response = await fetch("http://localhost:3000/autos", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({id_auto: id})
+    })
+
+    let res = await response.json()
+    console.log(res)
+    location.reload()
 }
