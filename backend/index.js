@@ -116,67 +116,52 @@ app.put('/autos', async function(req, res) {
     let valores = Object.values(body);
     
     let respuesta = null;
-    for (let i = 1; i < body.length; i++) {
-        respuesta = await MySQL.realizarQuery(`
-        UPDATE Autos
-        SET ${claves[i]} = '${valores[i]}'
-        WHERE ${claves[0]} = '${valores[0]}';`);
-    }
+    let setClause = claves.slice(1).map((clave, index) => `${clave} = '${valores[index + 1]}'`).join(', ');
+
+    respuesta = await MySQL.realizarQuery(`
+    UPDATE Autos
+    SET ${setClause}
+    WHERE ${claves[0]} = '${valores[0]}';`);
+
     res.send(respuesta);
 });
 
 app.put('/pilotos', async function(req, res) {
     let body = req.body;
-    console.log(body);
     let claves = Object.keys(body);
     let valores = Object.values(body);
-    let respuesta = null;
-
-    for (let i = 1; i < body.length; i++) {
-        respuesta = await MySQL.realizarQuery(`
+    let setClause = claves.slice(1).map((clave, index) => `${clave} = '${valores[index + 1]}'`).join(', ');
+    let respuesta = await MySQL.realizarQuery(`
         UPDATE Pilotos
-        SET ${claves[i]} = '${valores[i]}'
+        SET ${setClause}
         WHERE ${claves[0]} = '${valores[0]}';`);
-    }
-
     res.send(respuesta);
 });
 
 app.put('/circuitos', async function(req, res) {
     let body = req.body;
-    console.log(body);
     let claves = Object.keys(body);
     let valores = Object.values(body);
-    let respuesta = null;
-
-    for (let i = 1; i < body.length; i++) {
-        respuesta = await MySQL.realizarQuery(`
+    let setClause = claves.slice(1).map((clave, index) => `${clave} = '${valores[index + 1]}'`).join(', ');
+    let respuesta = await MySQL.realizarQuery(`
         UPDATE Circuitos
-        SET ${claves[i]} = '${valores[i]}'
+        SET ${setClause}
         WHERE ${claves[0]} = '${valores[0]}';`);
-    }
-
     res.send(respuesta);
 });
 
 app.put('/pilotos-por-auto', async function(req, res) {
     let body = req.body;
-    console.log(body);
-    
     let claves = Object.keys(body);
     let valores = Object.values(body);
-    
-    let respuesta = null;
-
-    for (let i = 1; i < body.length; i++) {
-        respuesta = await MySQL.realizarQuery(`
+    let setClause = claves.slice(1).map((clave, index) => `${clave} = '${valores[index + 1]}'`).join(', ');
+    let respuesta = await MySQL.realizarQuery(`
         UPDATE PilotosPorAuto
-        SET ${claves[i]} = '${valores[i]}'
+        SET ${setClause}
         WHERE ${claves[0]} = '${valores[0]}';`);
-    }
-
     res.send(respuesta);
 });
+
 
 app.delete('/autos', async function(req, res) {
     let body = req.body;
